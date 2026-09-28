@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle de Marmitas - Setembro & Outubro 2026</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 h-full flex flex-col justify-between selection:bg-green-500 selection:text-white">
+
+    <header class="bg-white border-b border-slate-200 shadow-sm sticky top-0 z-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="bg-green-100 p-2.5 rounded-2xl text-green-600 text-2xl shadow-inner">
+                    🍱
+                </div>
+                <div>
+                    <h1 class="text-xl sm:text-2xl font-bold tracking-tight text-slate-950">Controle de Marmitas 2026</h1>
+                    <p class="text-xs sm:text-sm text-slate-500">Gerenciamento interativo para Setembro e Outubro de 2026</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-2">
+                <button onclick="resetarDados()" class="px-3.5 py-2 text-xs font-medium text-red-600 bg-red-50 hover:bg-red-100 rounded-xl transition border border-red-200">
+                    🔄 Limpar Dados
+                </button>
+                <button onclick="exportarDados()" class="px-3.5 py-2 text-xs font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition border border-slate-200">
+                    📥 Exportar JSON
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-8">
+
+        <!-- Legend and Quick Stats Panel -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <!-- Legend Card -->
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200/80 flex flex-col justify-between">
+                <div>
+                    <h2 class="text-sm font-semibold text-slate-900 uppercase tracking-wider mb-3">Legenda de Marcações</h2>
+                    <div class="space-y-2.5">
+                        <div class="flex items-center justify-between text-sm bg-amber-50/70 p-2.5 rounded-xl border border-amber-200/60">
+                            <span class="flex items-center gap-2 font-medium text-amber-900">
+                                <span class="w-6 h-6 rounded-lg bg-amber-500 text-white flex items-center justify-center text-xs shadow-sm">🚀</span> 
+                                Início Marmita
+                            </span>
+                            <span class="text-xs text-amber-700 bg-amber-100 px-2 py-0.5 rounded-full font-semibold">Ciclo / Início</span>
+                        </div>
+                        <div class="flex items-center justify-between text-sm bg-emerald-50/70 p-2.5 rounded-xl border border-emerald-200/60">
+                            <span class="flex items-center gap-2 font-medium text-emerald-900">
+                                <span class="w-6 h-6 rounded-lg bg-emerald-500 text-white flex items-center justify-center text-xs shadow-sm">✅</span> 
+                                Teve Marmita
+                            </span>
+                            <span class="text-xs text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full font-semibold">Positivo</span>
+                        </div>
+                        <div class="flex items-center justify-between text-sm bg-rose-50/70 p-2.5 rounded-xl border border-rose-200/60">
+                            <span class="flex items-center gap-2 font-medium text-rose-900">
+                                <span class="w-6 h-6 rounded-lg bg-rose-500 text-white flex items-center justify-center text-xs shadow-sm">❌</span> 
+                                Não teve marmita
+                            </span>
+                            <span class="text-xs text-rose-700 bg-rose-100 px-2 py-0.5 rounded-full font-semibold">Ausente</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-xs text-slate-400 mt-3 italic">* Clique em qualquer dia do calendário para abrir o painel de edição e alternar os estados.</p>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <!-- Setembro Stats -->
+                <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200/80 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center mb-3">
+                            <h3 class="font-bold text-slate-900 text-base">Setembro 2026</h3>
+                            <span class="bg-slate-100 text-slate-700 text-xs px-2.5 py-1 rounded-lg font-medium">30 dias</span>
+                        </div>
+                        <div class="grid grid-cols-3 gap-2 text-center">
+                            <div class="bg-amber-50 p-2.5 rounded-xl border border-amber-100">
+                                <span id="stat-set-inicio" class="block text-lg font-bold text-amber-600">0</span>
+                                <span class="text-[10px] uppercase font-semibold text-amber-800">Inícios</span>
+                            </div>
+                            <div class="bg-emerald-50 p-2.5 rounded-xl border border-emerald-100">
+                                <span id="stat-set-teve" class="block text-lg font-bold text-emerald-600">0</span>
+                                <span class="text-[10px] uppercase font-semibold text-emerald-800">Com Marmita</span>
+                            </div>
+                            <div class="bg-rose-50 p-2.5 rounded-xl border border-rose-100">
+                                <span id="stat-set-naoteve" class="block text-lg font-bold text-rose-600">0</span>
+                                <span class="text-[10px] uppercase font-semibold text-rose-800">Sem Marmita</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Outubro Stats -->
+                <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200/80 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center mb-3">
+                            <h3 class="font-bold text-slate-900 text-base">Outubro 2026</h3>
+                            <span class="bg-slate-100 text-slate-700 text-xs px-2.5 py-1 rounded-lg font-medium">31 dias</span>
+                        </div>
+                        <div class="grid grid-cols-3 gap-2 text-center">
+                            <div class="bg-amber-50 p-2.5 rounded-xl border border-amber-100">
+                                <span id="stat-out-inicio" class="block text-lg font-bold text-amber-600">0</span>
+                                <span class="text-[10px] uppercase font-semibold text-amber-800">Inícios</span>
+                            </div>
+                            <div class="bg-emerald-50 p-2.5 rounded-xl border border-emerald-100">
+                                <span id="stat-out-teve" class="block text-lg font-bold text-emerald-600">0</span>
+                                <span class="text-[10px] uppercase font-semibold text-emerald-800">Com Marmita</span>
+                            </div>
+                            <div class="bg-rose-50 p-2.5 rounded-xl border border-rose-100">
+                                <span id="stat-out-naoteve" class="block text-lg font-bold text-rose-600">0</span>
+                                <span class="text-[10px] uppercase font-semibold text-rose-800">Sem Marmita</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
+            
+            <!-- September 2026 Calendar Card -->
+            <section class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200/80 flex flex-col">
+                <div class="flex items-center justify-between mb-6 pb-4 border-b border-slate-100">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-2xl bg-green-50 text-green-600 font-bold flex items-center justify-center text-lg shadow-sm border border-green-100">09</div>
+                        <div>
+                            <h2 class="text-xl font-bold text-slate-900">Setembro</h2>
+                            <p class="text-xs text-slate-500 font-medium">2026 • 30 Dias</p>
+                        </div>
+                    </div>
+                    <span id="badge-count-set" class="text-xs font-semibold px-3 py-1 bg-slate-100 text-slate-600 rounded-full">0 marcações</span>
+                </div>
+
+                <!-- Weekday Headers -->
+                <div class="grid grid-cols-7 gap-1 text-center text-xs font-semibold text-slate-400 mb-3">
+                    <div class="py-1">Dom</div>
+                    <div class="py-1">Seg</div>
+                    <div class="py-1">Ter</div>
+                    <div class="py-1">Qua</div>
+                    <div class="py-1">Qui</div>
+                    <div class="py-1">Sex</div>
+                    <div class="py-1">Sáb</div>
+                </div>
+
+                <!-- Days Grid for September 2026 -->
+                <div id="calendar-grid-2026-09" class="grid grid-cols-7 gap-2 flex-grow">
+                    <!-- Dynamic Days -->
+                </div>
+            </section>
+
+            <!-- October 2026 Calendar Card -->
+            <section class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200/80 flex flex-col">
+                <div class="flex items-center justify-between mb-6 pb-4 border-b border-slate-100">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-2xl bg-green-50 text-green-600 font-bold flex items-center justify-center text-lg shadow-sm border border-green-100">10</div>
+                        <div>
+                            <h2 class="text-xl font-bold text-slate-900">Outubro</h2>
+                            <p class="text-xs text-slate-500 font-medium">2026 • 31 Dias</p>
+                        </div>
+                    </div>
+                    <span id="badge-count-out" class="text-xs font-semibold px-3 py-1 bg-slate-100 text-slate-600 rounded-full">0 marcações</span>
+                </div>
+
+                <!-- Weekday Headers -->
+                <div class="grid grid-cols-7 gap-1 text-center text-xs font-semibold text-slate-400 mb-3">
+                    <div class="py-1">Dom</div>
+                    <div class="py-1">Seg</div>
+                    <div class="py-1">Ter</div>
+                    <div class="py-1">Qua</div>
+                    <div class="py-1">Qui</div>
+                    <div class="py-1">Sex</div>
+                    <div class="py-1">Sáb</div>
+                </div>
+
+                <!-- Days Grid for October 2026 -->
+                <div id="calendar-grid-2026-10" class="grid grid-cols-7 gap-2 flex-grow">
+                    <!-- Dynamic Days -->
+                </div>
+            </section>
+
+        </div>
+
+    </main>
+
+    <div id="day-modal" class="fixed inset-0 bg-slate-950/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-200">
+        <div id="modal-content" class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-100 transform scale-95 transition-all duration-200">
+            <div class="flex justify-between items-center mb-5 pb-3 border-b border-slate-100">
+                <div>
+                    <h3 id="modal-date-title" class="text-lg font-bold text-slate-900">Editar Dia</h3>
+                    <p id="modal-date-subtitle" class="text-xs text-slate-500">Selecione os estados para esta data</p>
+                </div>
+                <button onclick="fecharModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center text-sm transition">
+                    ✕
+                </button>
+            </div>
+
+            <!-- Options Selection -->
+            <div class="space-y-3 mb-6">
+                <button onclick="toggleEstadoData('INICIO')" id="btn-estado-INICIO" class="w-full flex items-center justify-between p-3.5 rounded-2xl border-2 border-slate-100 hover:border-amber-400 transition-all text-left group">
+                    <div class="flex items-center gap-3">
+                        <span class="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 font-bold flex items-center justify-center text-lg shadow-sm">🚀</span>
+                        <div>
+                            <span class="block font-semibold text-slate-800 text-sm">Início Marmita</span>
+                            <span class="block text-xs text-slate-400">Marca o início de um ciclo ou período</span>
+                        </div>
+                    </div>
+                    <div id="check-INICIO" class="w-6 h-6 rounded-full border-2 border-slate-300 flex items-center justify-center text-transparent text-xs font-bold transition">✓</div>
+                </button>
+
+                <button onclick="toggleEstadoData('TEVE')" id="btn-estado-TEVE" class="w-full flex items-center justify-between p-3.5 rounded-2xl border-2 border-slate-100 hover:border-emerald-400 transition-all text-left group">
+                    <div class="flex items-center gap-3">
+                        <span class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 font-bold flex items-center justify-center text-lg shadow-sm">✅</span>
+                        <div>
+                            <span class="block font-semibold text-slate-800 text-sm">Teve Marmita</span>
+                            <span class="block text-xs text-slate-400">Houve marmita neste dia</span>
+                        </div>
+                    </div>
+                    <div id="check-TEVE" class="w-6 h-6 rounded-full border-2 border-slate-300 flex items-center justify-center text-transparent text-xs font-bold transition">✓</div>
+                </button>
+
+                <button onclick="toggleEstadoData('NAO_TEVE')" id="btn-estado-NAO_TEVE" class="w-full flex items-center justify-between p-3.5 rounded-2xl border-2 border-slate-100 hover:border-rose-400 transition-all text-left group">
+                    <div class="flex items-center gap-3">
+                        <span class="w-10 h-10 rounded-xl bg-rose-100 text-rose-600 font-bold flex items-center justify-center text-lg shadow-sm">❌</span>
+                        <div>
+                            <span class="block font-semibold text-slate-800 text-sm">Não teve marmita</span>
+                            <span class="block text-xs text-slate-400">Não houve marmita registrada</span>
+                        </div>
+                    </div>
+                    <div id="check-NAO_TEVE" class="w-6 h-6 rounded-full border-2 border-slate-300 flex items-center justify-center text-transparent text-xs font-bold transition">✓</div>
+                </button>
+            </div>
+
+            <div class="flex gap-3">
+                <button onclick="salvarEEstruturarDia()" class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-2xl shadow-md shadow-green-600/20 transition text-sm">
+                    Salvar Alterações
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-white border-t border-slate-200/80 py-4 text-center text-xs text-slate-400">
+        <p>Controle de Marmitas • Desenvolvido com Tailwind CSS & JavaScript • Setembro e Outubro de 2026</p>
+    </footer>
+
+    <script>
+        /* 
+          Enum structure mapping:
+          Estados possíveis: 'INICIO' | 'TEVE' | 'NAO_TEVE'
+          Estrutura do Map (armazenado no localStorage):
+          {
+             "2026-09-01": ["INICIO", "TEVE"],
+             "2026-09-02": ["TEVE"],
+             ...
+          }
+        */
+
+        const STORAGE_KEY = 'marmitas_2026_data_v1';
+        let dadosMarmita = {};
+        let dataSelecionadaAtual = null;
+        let estadosTempSelecionados = [];
+
+        // Inicialização dos dados
+        function carregarDadosStorage() {
+            try {
+                const salvo = localStorage.getItem(STORAGE_KEY);
+                if (salvo) {
+                    dadosMarmita = JSON.parse(salvo);
+                } else {
+                    // Dados iniciais de exemplo para demonstração
+                    dadosMarmita = {
+                        "2026-09-01": ["INICIO", "TEVE"],
+                        "2026-09-02": ["TEVE"],
+                        "2026-09-03": ["TEVE"],
+                        "2026-09-04": ["NAO_TEVE"],
+                        "2026-10-01": ["INICIO", "TEVE"]
+                    };
+                    salvarDadosStorage();
+                }
+            } catch (e) {
+                console.error("Erro ao carregar dados do storage", e);
+                dadosMarmita = {};
+            }
+        }
+
+        function salvarDadosStorage() {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(dadosMarmita));
+            } catch (e) {
+                console.error("Erro ao salvar dados no storage", e);
+            }
+        }
+
+        // Gerar os calendários de Setembro e Outubro de 2026
+        function renderizarCalendarios() {
+            renderizarMes('2026-09', 'calendar-grid-2026-09', 'badge-count-set');
+            renderizarMes('2026-10', 'calendar-grid-2026-10', 'badge-count-out');
+            atualizarEstatisticas();
+        }
+
+        function renderizarMes(anoMesStr, containerId, badgeId) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+
+            const [ano, mes] = anoMesStr.split('-').map(Number);
+            
+            // Primeiro dia do mês e total de dias do mês
+            const primeiroDiaSemana = new Date(ano, mes - 1, 1).getDay();
+            const totalDias = new Date(ano, mes, 0).getDate();
+
+            let totalMarcaçoesMes = 0;
+
+            // Preencher espaços vazios antes do dia 1
+            for (let i = 0; i < primeiroDiaSemana; i++) {
+                const vazio = document.createElement('div');
+                vazio.className = "h-20 sm:h-24 rounded-2xl bg-slate-50/40 border border-transparent";
+                container.appendChild(vazio);
+            }
+
+            // Preencher os dias do mês
+            for (let dia = 1; dia <= totalDias; dia++) {
+                const diaStr = String(dia).padStart(2, '0');
+                const dataChave = `${ano}-${String(mes).padStart(2, '0')}-${diaStr}`;
+                const listaEstados = dadosMarmita[dataChave] || [];
+
+                if (listaEstados.length > 0) totalMarcaçoesMes++;
+
+                const diaCard = document.createElement('div');
+                diaCard.className = "h-20 sm:h-24 rounded-2xl p-1.5 sm:p-2 border border-slate-200/70 bg-white hover:border-green-400 hover:shadow-md transition cursor-pointer flex flex-col justify-between relative group";
+                diaCard.onclick = () => abrirModal(dataChave);
+
+                // Cabeçalho do dia (número)
+                let htmlContent = `
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs sm:text-sm font-bold text-slate-700">${dia}</span>
+                        ${listaEstados.length > 0 ? '<span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>' : ''}
+                    </div>
+                    <div class="flex flex-wrap gap-1 items-center justify-center my-auto">
+                `;
+
+                // Renderizar badges/ícones conforme estados presentes na lista
+                if (listaEstados.includes('INICIO')) {
+                    htmlContent += `<span class="inline-flex items-center justify-center w-6 h-6 rounded-lg bg-amber-100 text-amber-700 text-xs shadow-xs" title="Início Marmita">🚀</span>`;
+                }
+                if (listaEstados.includes('TEVE')) {
+                    htmlContent += `<span class="inline-flex items-center justify-center w-6 h-6 rounded-lg bg-emerald-100 text-emerald-700 text-xs shadow-xs" title="Teve Marmita">✅</span>`;
+                }
+                if (listaEstados.includes('NAO_TEVE')) {
+                    htmlContent += `<span class="inline-flex items-center justify-center w-6 h-6 rounded-lg bg-rose-100 text-rose-700 text-xs shadow-xs" title="Não teve marmita">❌</span>`;
+                }
+
+                if (listaEstados.length === 0) {
+                    htmlContent += `<span class="text-[10px] text-slate-300 font-medium group-hover:text-slate-400 transition">vazio</span>`;
+                }
+
+                htmlContent += `</div>`;
+                diaCard.innerHTML = htmlContent;
+                container.appendChild(diaCard);
+            }
+
+            document.getElementById(badgeId).innerText = `${totalMarcaçoesMes} dias marcados`;
+        }
+
+        // Estatísticas
+        function atualizarEstatisticas() {
+            let setInicio = 0, setTeve = 0, setNaoTeve = 0;
+            let outInicio = 0, outTeve = 0, outNaoTeve = 0;
+
+            for (const [data, estados] of Object.entries(dadosMarmita)) {
+                if (data.startsWith('2026-09')) {
+                    if (estados.includes('INICIO')) setInicio++;
+                    if (estados.includes('TEVE')) setTeve++;
+                    if (estados.includes('NAO_TEVE')) setNaoTeve++;
+                } else if (data.startsWith('2026-10')) {
+                    if (estados.includes('INICIO')) outInicio++;
+                    if (estados.includes('TEVE')) outTeve++;
+                    if (estados.includes('NAO_TEVE')) outNaoTeve++;
+                }
+            }
+
+            document.getElementById('stat-set-inicio').innerText = setInicio;
+            document.getElementById('stat-set-teve').innerText = setTeve;
+            document.getElementById('stat-set-naoteve').innerText = setNaoTeve;
+
+            document.getElementById('stat-out-inicio').innerText = outInicio;
+            document.getElementById('stat-out-teve').innerText = outTeve;
+            document.getElementById('stat-out-naoteve').innerText = outNaoTeve;
+        }
+
+        // Modal de Edição
+        function abrirModal(dataChave) {
+            dataSelecionadaAtual = dataChave;
+            estadosTempSelecionados = [...(dadosMarmita[dataChave] || [])];
+
+            const [ano, mes, dia] = dataChave.split('-');
+            const dataFormatada = `${dia}/${mes}/${ano}`;
+            
+            document.getElementById('modal-date-title').innerText = `Data: ${dataFormatada}`;
+            document.getElementById('modal-date-subtitle').innerText = `Configurar status de marmita`;
+
+            atualizarBotoesModal();
+
+            const modal = document.getElementById('day-modal');
+            const content = document.getElementById('modal-content');
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            content.classList.remove('scale-95');
+            content.classList.add('scale-100');
+        }
+
+        function fecharModal() {
+            const modal = document.getElementById('day-modal');
+            const content = document.getElementById('modal-content');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            content.classList.remove('scale-100');
+            content.classList.add('scale-95');
+            dataSelecionadaAtual = null;
+        }
+
+        function toggleEstadoData(estado) {
+            // Se já tiver, remove. Se não tiver, adiciona. (Suporta múltiplos estados)
+            const index = estadosTempSelecionados.indexOf(estado);
+            if (index > -1) {
+                estadosTempSelecionados.splice(index, 1);
+            } else {
+                estadosTempSelecionados.push(estado);
+            }
+            atualizarBotoesModal();
+        }
+
+        function atualizarBotoesModal() {
+            const estadosPossiveis = ['INICIO', 'TEVE', 'NAO_TEVE'];
+            estadosPossiveis.forEach(est => {
+                const btn = document.getElementById(`btn-estado-${est}`);
+                const check = document.getElementById(`check-${est}`);
+                const selecionado = estadosTempSelecionados.includes(est);
+
+                if (selecionado) {
+                    btn.classList.add('border-green-500', 'bg-green-50/40');
+                    check.classList.remove('border-slate-300', 'text-transparent');
+                    check.classList.add('bg-green-600', 'border-green-600', 'text-white');
+                    check.innerText = '✓';
+                } else {
+                    btn.classList.remove('border-green-500', 'bg-green-50/40');
+                    check.classList.add('border-slate-300', 'text-transparent');
+                    check.classList.remove('bg-green-600', 'border-green-600', 'text-white');
+                    check.innerText = '';
+                }
+            });
+        }
+
+        function salvarEEstruturarDia() {
+            if (!dataSelecionadaAtual) return;
+
+            if (estadosTempSelecionados.length > 0) {
+                dadosMarmita[dataSelecionadaAtual] = [...estadosTempSelecionados];
+            } else {
+                delete dadosMarmita[dataSelecionadaAtual];
+            }
+
+            salvarDadosStorage();
+            renderizarCalendarios();
+            fecharModal();
+        }
+
+        function resetarDados() {
+            if (confirm('Deseja realmente limpar todos os registros salvos?')) {
+                dadosMarmita = {};
+                salvarDadosStorage();
+                renderizarCalendarios();
+            }
+        }
+
+        function exportarDados() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(dadosMarmita, null, 2));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", "marmitas_2026.json");
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+        }
+
+        // Executar inicialização ao carregar a janela
+        window.onload = function() {
+            carregarDadosStorage();
+            renderizarCalendarios();
+        };
+    </script>
+</body>
+</html>
