@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Controle de Marmitas - Setembro & Outubro 2026</title>
+    <title>Controle de Marmitas</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -37,8 +37,8 @@
                     🍱
                 </div>
                 <div>
-                    <h1 class="text-xl sm:text-2xl font-bold tracking-tight text-slate-950">Controle de Marmitas 2026</h1>
-                    <p class="text-xs sm:text-sm text-slate-500">Gerenciamento interativo para Setembro e Outubro de 2026</p>
+                    <h1 class="text-xl sm:text-2xl font-bold tracking-tight text-slate-950">Controle de Marmitas</h1>
+                    <p class="text-xs sm:text-sm text-slate-500">Gerenciamento interativo por carrossel de meses</p>
                 </div>
             </div>
             
@@ -89,52 +89,25 @@
                 <p class="text-xs text-slate-400 mt-3 italic">* Clique em qualquer dia do calendário para abrir o painel de edição e alternar os estados.</p>
             </div>
 
-            <!-- Stats Cards -->
-            <div class="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <!-- Setembro Stats -->
-                <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200/80 flex flex-col justify-between">
-                    <div>
-                        <div class="flex justify-between items-center mb-3">
-                            <h3 class="font-bold text-slate-900 text-base">Setembro 2026</h3>
-                            <span class="bg-slate-100 text-slate-700 text-xs px-2.5 py-1 rounded-lg font-medium">30 dias</span>
-                        </div>
-                        <div class="grid grid-cols-3 gap-2 text-center">
-                            <div class="bg-amber-50 p-2.5 rounded-xl border border-amber-100">
-                                <span id="stat-set-inicio" class="block text-lg font-bold text-amber-600">0</span>
-                                <span class="text-[10px] uppercase font-semibold text-amber-800">Inícios</span>
-                            </div>
-                            <div class="bg-emerald-50 p-2.5 rounded-xl border border-emerald-100">
-                                <span id="stat-set-teve" class="block text-lg font-bold text-emerald-600">0</span>
-                                <span class="text-[10px] uppercase font-semibold text-emerald-800">Com Marmita</span>
-                            </div>
-                            <div class="bg-rose-50 p-2.5 rounded-xl border border-rose-100">
-                                <span id="stat-set-naoteve" class="block text-lg font-bold text-rose-600">0</span>
-                                <span class="text-[10px] uppercase font-semibold text-rose-800">Sem Marmita</span>
-                            </div>
-                        </div>
+            <!-- Stats Cards (Dynamic based on current viewed month) -->
+            <div class="lg:col-span-2 bg-white rounded-2xl p-5 shadow-sm border border-slate-200/80 flex flex-col justify-between">
+                <div>
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 id="stat-mes-titulo" class="font-bold text-slate-900 text-base">Estatísticas do Mês</h3>
+                        <span id="stat-mes-dias" class="bg-slate-100 text-slate-700 text-xs px-2.5 py-1 rounded-lg font-medium">-- dias</span>
                     </div>
-                </div>
-
-                <!-- Outubro Stats -->
-                <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200/80 flex flex-col justify-between">
-                    <div>
-                        <div class="flex justify-between items-center mb-3">
-                            <h3 class="font-bold text-slate-900 text-base">Outubro 2026</h3>
-                            <span class="bg-slate-100 text-slate-700 text-xs px-2.5 py-1 rounded-lg font-medium">31 dias</span>
+                    <div class="grid grid-cols-3 gap-3 text-center">
+                        <div class="bg-amber-50 p-3 rounded-xl border border-amber-100">
+                            <span id="stat-mes-inicio" class="block text-xl font-bold text-amber-600">0</span>
+                            <span class="text-[10px] uppercase font-semibold text-amber-800">Inícios</span>
                         </div>
-                        <div class="grid grid-cols-3 gap-2 text-center">
-                            <div class="bg-amber-50 p-2.5 rounded-xl border border-amber-100">
-                                <span id="stat-out-inicio" class="block text-lg font-bold text-amber-600">0</span>
-                                <span class="text-[10px] uppercase font-semibold text-amber-800">Inícios</span>
-                            </div>
-                            <div class="bg-emerald-50 p-2.5 rounded-xl border border-emerald-100">
-                                <span id="stat-out-teve" class="block text-lg font-bold text-emerald-600">0</span>
-                                <span class="text-[10px] uppercase font-semibold text-emerald-800">Com Marmita</span>
-                            </div>
-                            <div class="bg-rose-50 p-2.5 rounded-xl border border-rose-100">
-                                <span id="stat-out-naoteve" class="block text-lg font-bold text-rose-600">0</span>
-                                <span class="text-[10px] uppercase font-semibold text-rose-800">Sem Marmita</span>
-                            </div>
+                        <div class="bg-emerald-50 p-3 rounded-xl border border-emerald-100">
+                            <span id="stat-mes-teve" class="block text-xl font-bold text-emerald-600">0</span>
+                            <span class="text-[10px] uppercase font-semibold text-emerald-800">Com Marmita</span>
+                        </div>
+                        <div class="bg-rose-50 p-3 rounded-xl border border-rose-100">
+                            <span id="stat-mes-naoteve" class="block text-xl font-bold text-rose-600">0</span>
+                            <span class="text-[10px] uppercase font-semibold text-rose-800">Sem Marmita</span>
                         </div>
                     </div>
                 </div>
@@ -142,72 +115,53 @@
 
         </div>
 
-        <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
+        <!-- Carousel Navigation & Calendar Section -->
+        <section class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200/80 flex flex-col">
             
-            <!-- September 2026 Calendar Card -->
-            <section class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200/80 flex flex-col">
-                <div class="flex items-center justify-between mb-6 pb-4 border-b border-slate-100">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-2xl bg-green-50 text-green-600 font-bold flex items-center justify-center text-lg shadow-sm border border-green-100">09</div>
-                        <div>
-                            <h2 class="text-xl font-bold text-slate-900">Setembro</h2>
-                            <p class="text-xs text-slate-500 font-medium">2026 • 30 Dias</p>
-                        </div>
+            <!-- Carousel Header controls -->
+            <div class="flex flex-col sm:flex-row items-center justify-between mb-6 pb-4 border-b border-slate-100 gap-4">
+                <div class="flex items-center gap-3">
+                    <div id="carousel-month-badge" class="w-10 h-10 rounded-2xl bg-green-50 text-green-600 font-bold flex items-center justify-center text-lg shadow-sm border border-green-100">--</div>
+                    <div>
+                        <h2 id="carousel-month-title" class="text-xl font-bold text-slate-900 capitalize">Carregando...</h2>
+                        <p id="carousel-month-subtitle" class="text-xs text-slate-500 font-medium">-- Dias</p>
                     </div>
-                    <span id="badge-count-set" class="text-xs font-semibold px-3 py-1 bg-slate-100 text-slate-600 rounded-full">0 marcações</span>
                 </div>
 
-                <!-- Weekday Headers -->
-                <div class="grid grid-cols-7 gap-1 text-center text-xs font-semibold text-slate-400 mb-3">
-                    <div class="py-1">Dom</div>
-                    <div class="py-1">Seg</div>
-                    <div class="py-1">Ter</div>
-                    <div class="py-1">Qua</div>
-                    <div class="py-1">Qui</div>
-                    <div class="py-1">Sex</div>
-                    <div class="py-1">Sáb</div>
+                <div class="flex items-center gap-2 flex-wrap justify-center">
+                    <span id="badge-count-mes" class="text-xs font-semibold px-3 py-1 bg-slate-100 text-slate-600 rounded-full mr-2">0 marcações</span>
+                    <button onclick="mudarMes(-1)" class="p-2.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-100 text-slate-700 transition flex items-center gap-1 text-xs font-semibold shadow-sm">
+                        ◀ Mês Anterior
+                    </button>
+                    <button onclick="irParaMesAtual()" class="px-3 py-2.5 rounded-xl border border-green-200 bg-green-50 hover:bg-green-100 text-green-700 transition text-xs font-semibold shadow-sm">
+                        Hoje
+                    </button>
+                    <button onclick="mudarMes(1)" class="p-2.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-100 text-slate-700 transition flex items-center gap-1 text-xs font-semibold shadow-sm">
+                        Próximo Mês ▶
+                    </button>
                 </div>
+            </div>
 
-                <!-- Days Grid for September 2026 -->
-                <div id="calendar-grid-2026-09" class="grid grid-cols-7 gap-2 flex-grow">
-                    <!-- Dynamic Days -->
-                </div>
-            </section>
+            <!-- Weekday Headers -->
+            <div class="grid grid-cols-7 gap-1 text-center text-xs font-semibold text-slate-400 mb-3">
+                <div class="py-1">Dom</div>
+                <div class="py-1">Seg</div>
+                <div class="py-1">Ter</div>
+                <div class="py-1">Qua</div>
+                <div class="py-1">Qui</div>
+                <div class="py-1">Sex</div>
+                <div class="py-1">Sáb</div>
+            </div>
 
-            <!-- October 2026 Calendar Card -->
-            <section class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200/80 flex flex-col">
-                <div class="flex items-center justify-between mb-6 pb-4 border-b border-slate-100">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-2xl bg-green-50 text-green-600 font-bold flex items-center justify-center text-lg shadow-sm border border-green-100">10</div>
-                        <div>
-                            <h2 class="text-xl font-bold text-slate-900">Outubro</h2>
-                            <p class="text-xs text-slate-500 font-medium">2026 • 31 Dias</p>
-                        </div>
-                    </div>
-                    <span id="badge-count-out" class="text-xs font-semibold px-3 py-1 bg-slate-100 text-slate-600 rounded-full">0 marcações</span>
-                </div>
-
-                <!-- Weekday Headers -->
-                <div class="grid grid-cols-7 gap-1 text-center text-xs font-semibold text-slate-400 mb-3">
-                    <div class="py-1">Dom</div>
-                    <div class="py-1">Seg</div>
-                    <div class="py-1">Ter</div>
-                    <div class="py-1">Qua</div>
-                    <div class="py-1">Qui</div>
-                    <div class="py-1">Sex</div>
-                    <div class="py-1">Sáb</div>
-                </div>
-
-                <!-- Days Grid for October 2026 -->
-                <div id="calendar-grid-2026-10" class="grid grid-cols-7 gap-2 flex-grow">
-                    <!-- Dynamic Days -->
-                </div>
-            </section>
-
-        </div>
+            <!-- Dynamic Days Grid -->
+            <div id="calendar-grid-dinamico" class="grid grid-cols-7 gap-2 flex-grow">
+                <!-- Preenchido via JavaScript -->
+            </div>
+        </section>
 
     </main>
 
+    <!-- Modal de Edição -->
     <div id="day-modal" class="fixed inset-0 bg-slate-950/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-200">
         <div id="modal-content" class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-100 transform scale-95 transition-all duration-200">
             <div class="flex justify-between items-center mb-5 pb-3 border-b border-slate-100">
@@ -265,40 +219,33 @@
     </div>
 
     <footer class="bg-white border-t border-slate-200/80 py-4 text-center text-xs text-slate-400">
-        <p>Controle de Marmitas • Desenvolvido com Tailwind CSS & JavaScript • Setembro e Outubro de 2026</p>
+        <p>Controle de Marmitas • Desenvolvido com Tailwind CSS & JavaScript</p>
     </footer>
 
     <script>
-        /* 
-          Enum structure mapping:
-          Estados possíveis: 'INICIO' | 'TEVE' | 'NAO_TEVE'
-          Estrutura do Map (armazenado no localStorage):
-          {
-             "2026-09-01": ["INICIO", "TEVE"],
-             "2026-09-02": ["TEVE"],
-             ...
-          }
-        */
-
-        const STORAGE_KEY = 'marmitas_2026_data_v1';
+        const STORAGE_KEY = 'marmitas_app_data_v2';
         let dadosMarmita = {};
         let dataSelecionadaAtual = null;
         let estadosTempSelecionados = [];
 
-        // Inicialização dos dados
+        let dataAtualCarrossel = new Date();
+
+        const nomesMeses = [
+            "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+            "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+        ];
+
         function carregarDadosStorage() {
             try {
                 const salvo = localStorage.getItem(STORAGE_KEY);
                 if (salvo) {
                     dadosMarmita = JSON.parse(salvo);
                 } else {
-                    // Dados iniciais de exemplo para demonstração
                     dadosMarmita = {
                         "2026-09-01": ["INICIO", "TEVE"],
                         "2026-09-02": ["TEVE"],
                         "2026-09-03": ["TEVE"],
-                        "2026-09-04": ["NAO_TEVE"],
-                        "2026-10-01": ["INICIO", "TEVE"]
+                        "2026-09-04": ["NAO_TEVE"]
                     };
                     salvarDadosStorage();
                 }
@@ -316,45 +263,52 @@
             }
         }
 
-        // Gerar os calendários de Setembro e Outubro de 2026
-        function renderizarCalendarios() {
-            renderizarMes('2026-09', 'calendar-grid-2026-09', 'badge-count-set');
-            renderizarMes('2026-10', 'calendar-grid-2026-10', 'badge-count-out');
-            atualizarEstatisticas();
+        function mudarMes(direcao) {
+            dataAtualCarrossel.setMonth(dataAtualCarrossel.getMonth() + direcao);
+            renderizarCalendarioDinamico();
         }
 
-        function renderizarMes(anoMesStr, containerId, badgeId) {
-            const container = document.getElementById(containerId);
+        function irParaMesAtual() {
+            dataAtualCarrossel = new Date();
+            renderizarCalendarioDinamico();
+        }
+
+        function renderizarCalendarioDinamico() {
+            const container = document.getElementById('calendar-grid-dinamico');
             container.innerHTML = '';
 
-            const [ano, mes] = anoMesStr.split('-').map(Number);
-            
-            // Primeiro dia do mês e total de dias do mês
-            const primeiroDiaSemana = new Date(ano, mes - 1, 1).getDay();
-            const totalDias = new Date(ano, mes, 0).getDate();
+            const ano = dataAtualCarrossel.getFullYear();
+            const mesIndex = dataAtualCarrossel.getMonth();
+            const mesNumero = mesIndex + 1;
 
-            let totalMarcaçoesMes = 0;
+            const nomeMes = nomesMeses[mesIndex];
+            const totalDias = new Date(ano, mesNumero, 0).getDate();
+            const primeiroDiaSemana = new Date(ano, mesIndex, 1).getDay();
 
-            // Preencher espaços vazios antes do dia 1
+            document.getElementById('carousel-month-title').innerText = `${nomeMes}/${ano}`;
+            document.getElementById('carousel-month-subtitle').innerText = `${totalDias} Dias`;
+            document.getElementById('carousel-month-badge').innerText = String(mesNumero).padStart(2, '0');
+
+            let totalMarcacoesMes = 0;
+
             for (let i = 0; i < primeiroDiaSemana; i++) {
                 const vazio = document.createElement('div');
                 vazio.className = "h-20 sm:h-24 rounded-2xl bg-slate-50/40 border border-transparent";
                 container.appendChild(vazio);
             }
 
-            // Preencher os dias do mês
             for (let dia = 1; dia <= totalDias; dia++) {
                 const diaStr = String(dia).padStart(2, '0');
-                const dataChave = `${ano}-${String(mes).padStart(2, '0')}-${diaStr}`;
+                const mesStr = String(mesNumero).padStart(2, '0');
+                const dataChave = `${ano}-${mesStr}-${diaStr}`;
                 const listaEstados = dadosMarmita[dataChave] || [];
 
-                if (listaEstados.length > 0) totalMarcaçoesMes++;
+                if (listaEstados.length > 0) totalMarcacoesMes++;
 
                 const diaCard = document.createElement('div');
                 diaCard.className = "h-20 sm:h-24 rounded-2xl p-1.5 sm:p-2 border border-slate-200/70 bg-white hover:border-green-400 hover:shadow-md transition cursor-pointer flex flex-col justify-between relative group";
                 diaCard.onclick = () => abrirModal(dataChave);
 
-                // Cabeçalho do dia (número)
                 let htmlContent = `
                     <div class="flex justify-between items-center">
                         <span class="text-xs sm:text-sm font-bold text-slate-700">${dia}</span>
@@ -363,7 +317,6 @@
                     <div class="flex flex-wrap gap-1 items-center justify-center my-auto">
                 `;
 
-                // Renderizar badges/ícones conforme estados presentes na lista
                 if (listaEstados.includes('INICIO')) {
                     htmlContent += `<span class="inline-flex items-center justify-center w-6 h-6 rounded-lg bg-amber-100 text-amber-700 text-xs shadow-xs" title="Início Marmita">🚀</span>`;
                 }
@@ -383,36 +336,29 @@
                 container.appendChild(diaCard);
             }
 
-            document.getElementById(badgeId).innerText = `${totalMarcaçoesMes} dias marcados`;
+            document.getElementById('badge-count-mes').innerText = `${totalMarcacoesMes} dias marcados`;
+            atualizarEstatisticasMes(ano, mesNumero, totalDias, nomeMes);
         }
 
-        // Estatísticas
-        function atualizarEstatisticas() {
-            let setInicio = 0, setTeve = 0, setNaoTeve = 0;
-            let outInicio = 0, outTeve = 0, outNaoTeve = 0;
+        function atualizarEstatisticasMes(ano, mesNumero, totalDias, nomeMes) {
+            let inicio = 0, teve = 0, naoTeve = 0;
+            const prefixoData = `${ano}-${String(mesNumero).padStart(2, '0')}`;
 
             for (const [data, estados] of Object.entries(dadosMarmita)) {
-                if (data.startsWith('2026-09')) {
-                    if (estados.includes('INICIO')) setInicio++;
-                    if (estados.includes('TEVE')) setTeve++;
-                    if (estados.includes('NAO_TEVE')) setNaoTeve++;
-                } else if (data.startsWith('2026-10')) {
-                    if (estados.includes('INICIO')) outInicio++;
-                    if (estados.includes('TEVE')) outTeve++;
-                    if (estados.includes('NAO_TEVE')) outNaoTeve++;
+                if (data.startsWith(prefixoData)) {
+                    if (estados.includes('INICIO')) inicio++;
+                    if (estados.includes('TEVE')) teve++;
+                    if (estados.includes('NAO_TEVE')) naoTeve++;
                 }
             }
 
-            document.getElementById('stat-set-inicio').innerText = setInicio;
-            document.getElementById('stat-set-teve').innerText = setTeve;
-            document.getElementById('stat-set-naoteve').innerText = setNaoTeve;
-
-            document.getElementById('stat-out-inicio').innerText = outInicio;
-            document.getElementById('stat-out-teve').innerText = outTeve;
-            document.getElementById('stat-out-naoteve').innerText = outNaoTeve;
+            document.getElementById('stat-mes-titulo').innerText = `${nomeMes}/${ano}`;
+            document.getElementById('stat-mes-dias').innerText = `${totalDias} dias`;
+            document.getElementById('stat-mes-inicio').innerText = inicio;
+            document.getElementById('stat-mes-teve').innerText = teve;
+            document.getElementById('stat-mes-naoteve').innerText = naoTeve;
         }
 
-        // Modal de Edição
         function abrirModal(dataChave) {
             dataSelecionadaAtual = dataChave;
             estadosTempSelecionados = [...(dadosMarmita[dataChave] || [])];
@@ -442,7 +388,6 @@
         }
 
         function toggleEstadoData(estado) {
-            // Se já tiver, remove. Se não tiver, adiciona. (Suporta múltiplos estados)
             const index = estadosTempSelecionados.indexOf(estado);
             if (index > -1) {
                 estadosTempSelecionados.splice(index, 1);
@@ -483,7 +428,7 @@
             }
 
             salvarDadosStorage();
-            renderizarCalendarios();
+            renderizarCalendarioDinamico();
             fecharModal();
         }
 
@@ -491,7 +436,7 @@
             if (confirm('Deseja realmente limpar todos os registros salvos?')) {
                 dadosMarmita = {};
                 salvarDadosStorage();
-                renderizarCalendarios();
+                renderizarCalendarioDinamico();
             }
         }
 
@@ -499,16 +444,15 @@
             const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(dadosMarmita, null, 2));
             const downloadAnchor = document.createElement('a');
             downloadAnchor.setAttribute("href", dataStr);
-            downloadAnchor.setAttribute("download", "marmitas_2026.json");
+            downloadAnchor.setAttribute("download", "marmitas_controle.json");
             document.body.appendChild(downloadAnchor);
             downloadAnchor.click();
             downloadAnchor.remove();
         }
 
-        // Executar inicialização ao carregar a janela
         window.onload = function() {
             carregarDadosStorage();
-            renderizarCalendarios();
+            renderizarCalendarioDinamico();
         };
     </script>
 </body>
